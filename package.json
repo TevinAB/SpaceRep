@@ -1,0 +1,31 @@
+{
+  "name": "space-rep",
+  "version": "1.0.0",
+  "description": "A Space Repetition app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TevinAB/space-rep.git"
+  },
+  "author": "Tevin Banton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TevinAB/space-rep/issues"
+  },
+  "homepage": "https://github.com/TevinAB/space-rep#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.3.0",
+    "config": "^3.3.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.15"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  }
+}
