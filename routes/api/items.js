@@ -1,13 +1,13 @@
 const express = require('express');
 const route = express.Router();
-
+const auth = require('../../middleware/auth');
 //The Model
 const Item = require('../../models/Item');
 
 /**
  * @route [GET] api/items/:id
  * @description Get items
- * @access Public, for now
+ * @access Public
  */
 route.get('/:id', (req, res) => {
   //id: user's _id field
@@ -21,9 +21,9 @@ route.get('/:id', (req, res) => {
 /**
  * @route [POST] api/items
  * @description Creates a new item
- * @access Public, for now
+ * @access Private
  */
-route.post('/', (req, res) => {
+route.post('/', auth, (req, res) => {
   const newItem = new Item({
     title: req.body.title,
     answer: req.body.answer,
@@ -40,9 +40,9 @@ route.post('/', (req, res) => {
 /**
  * @route [DELETE] api/items/:id
  * @description Deletes an item using the id param
- * @access Public, for now
+ * @access Private
  */
-route.delete('/:id', (req, res) => {
+route.delete('/:id', auth, (req, res) => {
   const id = req.body.id;
   Item.deleteOne(id)
     .then(() => res.json({ msg: 'Success' }))
@@ -52,9 +52,9 @@ route.delete('/:id', (req, res) => {
 /**
  * @route [PUT] api/item/:id
  * @description Updates an item
- * @access Public, for now
+ * @access Private
  */
-route.put('/:id', (req, res) => {
+route.put('/:id', auth, (req, res) => {
   const id = req.params.id;
   Item.findById(id, (err, item) => {
     if (err) return res.status(400).json({ msg: 'Update failed' });
