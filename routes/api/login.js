@@ -1,7 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const signTokenAndRespond = require('../../utils/serverUtils')
-  .signTokenAndRespond;
+const { signTokenAndRespond } = require('../../utils/serverUtils');
 const bcrypt = require('bcrypt');
 
 const User = require('../../models/User');
