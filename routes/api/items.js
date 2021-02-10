@@ -55,7 +55,19 @@ route.delete('/:id', (req, res) => {
  * @access Public, for now
  */
 route.put('/:id', (req, res) => {
-  const id = req.body.id;
+  const id = req.params.id;
+  Item.findById(id, (err, item) => {
+    if (err) return res.status(400).json({ msg: 'Update failed' });
+
+    item.title = req.body.title || item.title;
+    item.answer = req.body.answer || item.answer;
+    item.topic = req.body.topic || item.topic;
+    item.userId = req.body.userId || item.userId;
+    item.repData = req.body.repData || item.repData;
+    item.save();
+
+    res.json({ msg: 'Success' });
+  });
 });
 
 module.exports = route;

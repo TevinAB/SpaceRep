@@ -10,6 +10,8 @@ app.use(express.json());
 
 //Add the routes
 app.use('/api/items', require('./routes/api/items'));
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/login', require('./routes/api/login'));
 
 //Connect to the database
 mongoose
