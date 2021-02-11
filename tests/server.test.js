@@ -6,16 +6,16 @@ const db = config.get('mongoURI');
 
 // Test get request to server
 describe('get requests', () => {
+  beforeAll(async () => {
+    await mongoose.connect(db, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Database Connected');
+  });
+
   it('should get items from db ', async (done) => {
-    mongoose
-      .connect(db, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-      })
-      .then(() => {
-        console.log('Database connected');
-      });
     const res = await request(app).get('/api/items');
     expect(res.status).toBe(200);
     done();
