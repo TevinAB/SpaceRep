@@ -20,9 +20,9 @@ route.post('/', async (req, res) => {
   if (!user) return res.status(400).json({ msg: 'User not found' });
 
   try {
-    //Check passwords
-    const match = await bcrypt.compare(password, user.password);
-    if (match) {
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (valid) {
       signTokenAndRespond(user, res);
     } else {
       res.status(401).json({ msg: 'Incorrect credentials.' });
