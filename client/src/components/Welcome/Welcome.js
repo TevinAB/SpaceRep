@@ -66,7 +66,7 @@ function Welcome() {
         </Typography>
       </Box>
       <Box classes={{ root: classes.formSection }}>
-        <Form type='Register' />
+        <Form type='Login' />
       </Box>
     </Box>
   );
