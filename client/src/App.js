@@ -9,6 +9,7 @@ const theme = createMuiTheme({
   },
 });
 
+//Add router here
 function App() {
   return (
     <div className='App'>
