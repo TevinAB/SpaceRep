@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 const marginBottom = '1.5rem';
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
   container: {
     width: '75%',
   },
@@ -36,6 +36,9 @@ const useStyle = makeStyles({
     '&:hover': {
       backgroundColor: '#750675',
     },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '2rem',
+    },
   },
   mainText: {
     fontSize: '2rem',
@@ -49,7 +52,17 @@ const useStyle = makeStyles({
     position: 'absolute',
     top: '-14px',
   },
-});
+  signIn: {
+    color: '#444040',
+    position: 'absolute',
+    top: '-14px',
+    right: '20px',
+    [theme.breakpoints.down('xs')]: {
+      left: '20px',
+      top: '14px',
+    },
+  },
+}));
 
 function Form({ type }) {
   const classes = useStyle();
@@ -84,19 +97,27 @@ function Form({ type }) {
     setter: setPassword,
   });
 
+  const { mainText, subText, buttonText, rightLinkText } = setTexts(type);
+
   const forgotPassword = (
     <div style={{ position: 'relative', marginBottom }}>
-      <Link
-        classes={{ root: classes.forgotPassword }}
-        href='#'
-        underline='always'
-      >
-        Forgot Password?
+      {/*Only visible for a login form */}
+      {type === 'Login' ? (
+        <Link
+          classes={{ root: classes.forgotPassword }}
+          href='#'
+          underline='always'
+        >
+          Forgot Password?
+        </Link>
+      ) : null}
+
+      {/*Link that's to the right of the form */}
+      <Link classes={{ root: classes.signIn }} href='#' underline='always'>
+        {rightLinkText}
       </Link>
     </div>
   );
-
-  const { mainText, subText, buttonText } = setTexts(type);
 
   return (
     <Box classes={{ root: classes.container }}>
@@ -107,12 +128,19 @@ function Form({ type }) {
         <Typography classes={{ root: classes.subText }}>{subText}</Typography>
       </div>
 
-      {/*Add on submit */}
+      {/*Add on submit handler */}
       <form className={classes.form}>
         {type === 'Register' ? nameComponent : null}
         {emailComponent}
-        {type !== 'Reset' ? passwordComponent : null}
-        {type === 'Login' ? forgotPassword : null}
+
+        {/*Becomes visible for any form type, except a password reset form*/}
+        {type !== 'Reset' ? (
+          <>
+            {passwordComponent}
+            {forgotPassword}
+          </>
+        ) : null}
+
         <Button
           classes={{ root: classes.buttonStyle }}
           fullWidth
@@ -129,17 +157,20 @@ function setTexts(formType) {
   let mainText = '';
   let subText = '';
   let buttonText = '';
+  let rightLinkText = '';
 
   switch (formType) {
     case 'Login':
       mainText = 'Welcome Back';
       subText = 'sign into your account';
       buttonText = 'Log In';
+      rightLinkText = "Don't have an account? Sign up";
       break;
     case 'Register':
       mainText = 'Create Your Account';
       subText = 'and start today';
       buttonText = 'Create Account';
+      rightLinkText = 'Already have an account? Sign in';
       break;
     case 'Reset':
       mainText = 'Reset Password';
@@ -147,9 +178,12 @@ function setTexts(formType) {
       buttonText = 'Reset Password';
       break;
     default:
-      return { mainText, subText, buttonText };
+      subText = '';
+      buttonText = '';
+      rightLinkText = '';
+      break;
   }
-  return { mainText, subText, buttonText };
+  return { mainText, subText, buttonText, rightLinkText };
 }
 
 function createTextFieldComponent(classes, config) {
