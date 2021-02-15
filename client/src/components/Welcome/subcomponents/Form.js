@@ -30,15 +30,16 @@ const useStyle = makeStyles((theme) => ({
   buttonStyle: {
     borderRadius: '27px',
     height: '3rem',
-    backgroundColor: '#9B009B',
+    backgroundColor: theme.palette.primary.main,
     color: '#FCFCFC',
     fontSize: '1rem',
     '&:hover': {
-      backgroundColor: '#750675',
+      backgroundColor: theme.palette.primary.dark,
     },
     [theme.breakpoints.down('xs')]: {
       marginTop: '2rem',
     },
+    textTransform: 'capitalize',
   },
   mainText: {
     fontSize: '2rem',

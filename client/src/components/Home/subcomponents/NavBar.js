@@ -4,9 +4,9 @@ import {
   Toolbar,
   Button,
   TextField,
-  InputAdornment,
   Container,
   Box,
+  IconButton,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,11 +22,49 @@ const useStyle = makeStyles((theme) => ({
   userDisplay: {
     display: 'flex',
     alignItems: 'center',
+    marginRight: '15px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   searchBar: {
     height: '37px',
     width: '100%',
     borderRadius: '7px',
+  },
+  searchButton: {
+    display: 'none',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '20px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+    },
+  },
+  serachContainer: {
+    minWidth: '155px',
+    width: '507px',
+    maxWidth: '507px',
+    flexShrink: 1,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  addItem: {
+    backgroundColor: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    textTransform: 'capitalize',
+  },
+  logOut: {
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    textTransform: 'capitalize',
+    marginLeft: '15px',
   },
 }));
 
@@ -42,36 +80,44 @@ function NavBar() {
     </Box>
   );
 
+  //To allow addItem button to be placed at a different location on smaller screens
+  const addItem = (
+    <Button className={`${classes.addItem}`} variant='outlined'>
+      Add Item
+    </Button>
+  );
+
   const buttonContainer = (
-    <div style={{ flexShrink: 0 }}>
-      <Button variant='outlined'>Add Item</Button>
-      <Button variant='outlined'>Log out</Button>
+    <div style={{ flexShrink: 0, marginLeft: '15px' }}>
+      {addItem}
+      <Button className={`${classes.logOut}`} variant='outlined'>
+        Log out
+      </Button>
     </div>
   );
 
   const searchBar = (
-    <div
-      style={{
-        minWidth: '155px',
-        width: '507px',
-        maxWidth: '507px',
-        flexShrink: 1,
-      }}
-    >
+    <Box classes={{ root: classes.serachContainer }}>
       <TextField
-        style={{ width: '100%' }}
+        fullWidth
         placeholder='Search for items in the current topic...'
         variant='outlined'
         InputProps={{
           classes: { root: classes.searchBar },
           endAdornment: (
-            <InputAdornment>
+            <IconButton>
               <i class='fas fa-search'></i>
-            </InputAdornment>
+            </IconButton>
           ),
         }}
       />
-    </div>
+    </Box>
+  );
+
+  const searchButton = (
+    <Box classes={{ root: classes.searchButton }}>
+      <i class='fas fa-search'></i>
+    </Box>
   );
 
   return (
@@ -80,6 +126,7 @@ function NavBar() {
         <Toolbar>
           <Container classes={{ root: classes.navContainer }}>
             {userDisplay}
+            {searchButton}
             {searchBar}
             {buttonContainer}
           </Container>

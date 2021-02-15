@@ -10,6 +10,12 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: '"Nunito", sans-serif',
   },
+  palette: {
+    primary: {
+      main: '#9B009B',
+      dark: '#750675',
+    },
+  },
 });
 
 //Add router here
