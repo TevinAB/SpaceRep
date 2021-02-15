@@ -42,7 +42,7 @@ const useStyle = makeStyles((theme) => ({
       display: 'flex',
     },
   },
-  serachContainer: {
+  searchContainer: {
     minWidth: '155px',
     width: '507px',
     maxWidth: '507px',
@@ -97,7 +97,7 @@ function NavBar() {
   );
 
   const searchBar = (
-    <Box classes={{ root: classes.serachContainer }}>
+    <Box classes={{ root: classes.searchContainer }}>
       <TextField
         fullWidth
         placeholder='Search for items in the current topic...'

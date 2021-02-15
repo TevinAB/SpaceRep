@@ -4,6 +4,7 @@ import Panel from './subcomponents/Panel';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Feed from './subcomponents/Feed';
+import Edit from './subcomponents/Edit';
 
 const useStyle = makeStyles((theme) => ({
   wrapperContainer: {
@@ -17,7 +18,7 @@ function Home() {
     <Box classes={{ root: classes.wrapperContainer }}>
       <NavBar />
       <Panel />
-      <Feed />
+      {false ? <Feed /> : <Edit />}
       <Panel />
     </Box>
   );
