@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   IconButton,
@@ -13,11 +13,19 @@ const useStyle = makeStyles((theme) => ({
     padding: '0px 17px',
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
+  answerBox: {
+    padding: '12px 17px',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
+  },
   titleBox: {
     paddingTop: '12px',
   },
   detailBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingBottom: '2px',
+    width: '100%',
   },
   editButton: {
     fontSize: '18px',
@@ -28,38 +36,66 @@ const useStyle = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  rightDetails: {
+    justifySelf: 'flex-end',
+  },
   badge: {
     position: 'relative',
     transform: 'none',
     marginRight: '5px',
   },
+  faded: {
+    color: theme.palette.grey[500],
+  },
 }));
 
 function FeedItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
   const classes = useStyle();
 
+  const onClick = (e) => setOpen(!open);
+
   const questionBox = (
-    <Box classes={{ root: classes.questionBox }}>
+    <Box classes={{ root: classes.questionBox }} onClick={onClick}>
       <Box classes={{ root: classes.titleBox }}>
-        <Typography>{question}</Typography>
+        <Typography variant='h6'>{question}</Typography>
       </Box>
       <Box classes={{ root: classes.detailBox }}>
         <Box classes={{ root: classes.leftDetails }}>
           <IconButton classes={{ root: classes.editButton }}>
             <i className='far fa-edit'></i>
           </IconButton>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Badge
-              classes={{ badge: classes.badge }}
-              badgeContent={27}
-              color='error'
-            ></Badge>
-            <Typography>Days left</Typography>
-          </div>
+          <Badge
+            classes={{ badge: classes.badge }}
+            badgeContent={27}
+            color='error'
+          ></Badge>
+          <Typography classes={{ root: classes.faded }} variant='caption'>
+            Days left
+          </Typography>
+        </Box>
+        <Box classes={{ root: classes.rightDetails }}>
+          <Typography classes={{ root: classes.faded }} variant='caption'>
+            Added: Feb 8. 2021
+          </Typography>
         </Box>
       </Box>
     </Box>
   );
-  return <Box>{questionBox}</Box>;
+
+  const answerBox = (
+    <Collapse in={open}>
+      <Box classes={{ root: classes.answerBox }}>
+        <Typography>{answer}</Typography>
+      </Box>
+    </Collapse>
+  );
+
+  return (
+    <Box>
+      {questionBox}
+      {answerBox}
+    </Box>
+  );
 }
 export default FeedItem;

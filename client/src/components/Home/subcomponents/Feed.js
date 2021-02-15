@@ -8,7 +8,9 @@ const useStyle = makeStyles((theme) => ({
     maxWidth: '820px',
     width: '64.0625%',
     height: 'calc(100vh - 64px)',
-    paddingTop: '64px',
+    maxHeight: 'calc(100vh - 64px)',
+    marginTop: '64px',
+    overflow: 'auto',
   },
 }));
 
@@ -16,7 +18,58 @@ function Feed() {
   const classes = useStyle();
   return (
     <Box classes={{ root: classes.container }}>
-      <FeedItem question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
+      <FeedItem
+        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
+      />
     </Box>
   );
 }
