@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
@@ -7,6 +9,7 @@ import {
   TextField,
   Select,
   MenuItem,
+  Button,
 } from '@material-ui/core';
 
 const useStyle = makeStyles((theme) => ({
@@ -42,15 +45,31 @@ const useStyle = makeStyles((theme) => ({
   selectTopicContainer: {
     marginTop: '25px',
   },
+  editorContainer: {
+    marginTop: '25px',
+  },
+  save: {
+    backgroundColor: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    textTransform: 'capitalize',
+    marginTop: '25px',
+  },
   container: {
     height: 'calc(100vh - 64px)',
-    border: `1px solid ${theme.palette.grey[300]}`,
+    overflow: 'auto',
+    //border: `1px solid ${theme.palette.grey[300]}`,
   },
 }));
 
 function Edit() {
   const [open, setOpen] = useState(false);
   const [topic, setTopic] = useState('');
+  const [frequency, setFrequency] = useState('');
+  const [answer, setAnswer] = useState('');
   const classes = useStyle();
 
   const onOpen = () => setOpen(true);
@@ -96,12 +115,47 @@ function Edit() {
     </Box>
   );
 
+  const selectFrequency = (
+    <Box classes={{ root: classes.selectTopicContainer }}>
+      <Select
+        id='select-frequency'
+        open={open}
+        onOpen={onOpen}
+        onClose={onClose}
+        onChange={onTopicChange}
+        value={topic}
+        fullWidth
+        variant='outlined'
+        className={classes.selectTopic}
+      >
+        {/*Map over the topics when available*/}
+        <MenuItem value='Low'>Low</MenuItem>
+        <MenuItem value='Med'>Med</MenuItem>
+      </Select>
+    </Box>
+  );
+
+  const editor = (
+    <Box classes={{ root: classes.editorContainer }}>
+      <ReactQuill theme='snow' value={answer} onChange={setAnswer} />
+    </Box>
+  );
+
+  const save = (
+    <Button className={`${classes.save}`} variant='outlined'>
+      Add Item
+    </Button>
+  );
+
   return (
     <Box classes={{ root: classes.wrapper }}>
       <Container classes={{ root: classes.container }} maxWidth='sm'>
         {title}
         {addItemTF}
         {selectTopic}
+        {editor}
+        {selectFrequency}
+        {save}
       </Container>
     </Box>
   );

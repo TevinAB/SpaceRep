@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
 import Welcome from './components/Welcome/Welcome';
-import Home from './components/Home/Home';
+import ProtectedRoute from './components/ProtectedRoute';
 import { CssBaseline, Container, ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import store from './redux/store';
+import { loadUser } from './redux/actions/authActions';
+import Home from './components/Home/Home';
 
 const theme = createMuiTheme({
   typography: {
@@ -18,23 +22,29 @@ const theme = createMuiTheme({
   },
 });
 
-//Add router here
 function App() {
+  //Attempt to load the user
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container>
-          <Router>
-            <Switch>
-              <Route exact path='/'>
-                <Welcome />
-              </Route>
-              <Route path='/home'>
-                <Home />
-              </Route>
-            </Switch>
-          </Router>
+          <Provider store={store}>
+            <Router>
+              <Switch>
+                <Route exact path='/'>
+                  <Welcome />
+                </Route>
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              </Switch>
+            </Router>
+          </Provider>
         </Container>
       </ThemeProvider>
     </div>

@@ -52,7 +52,7 @@ function Panel() {
           classes: { root: classes.searchBar },
           endAdornment: (
             <InputAdornment>
-              <i class='fas fa-plus-circle'></i>
+              <i className='fas fa-plus-circle'></i>
             </InputAdornment>
           ),
         }}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BackgroundImage from './images/bg.png';
@@ -55,6 +56,8 @@ const useStyle = makeStyles((theme) => ({
 
 function Welcome() {
   const classes = useStyle();
+  const type = useSelector((state) => state.formView.view);
+
   return (
     <Box classes={{ root: classes.welcome }}>
       <Box classes={{ root: classes.heroSection }}>
@@ -66,7 +69,7 @@ function Welcome() {
         </Typography>
       </Box>
       <Box classes={{ root: classes.formSection }}>
-        <Form type='Login' />
+        <Form type={type} />
       </Box>
     </Box>
   );

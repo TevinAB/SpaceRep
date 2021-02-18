@@ -8,6 +8,8 @@ import {
   Link,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { CHANGE_FORM_VIEW } from '../../../redux/actions/actionTypes';
 
 const marginBottom = '1.5rem';
 const useStyle = makeStyles((theme) => ({
@@ -65,8 +67,19 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
+//Form types
+const LOGIN = 'LOGIN';
+const REGISTER = 'REGISTER';
+const RESET = 'RESET';
+
+//Form link types
+const SIGN_UP = 'SIGN_UP';
+const SIGN_IN = 'SIGN_IN';
+const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+
 function Form({ type }) {
   const classes = useStyle();
+  const dispatch = useDispatch();
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -100,23 +113,34 @@ function Form({ type }) {
 
   const { mainText, subText, buttonText, rightLinkText } = setTexts(type);
 
-  const forgotPassword = (
+  const linkOptions = (
     <div style={{ position: 'relative', marginBottom }}>
       {/*Only visible for a login form */}
-      {type === 'Login' ? (
-        <Link
-          classes={{ root: classes.forgotPassword }}
-          href='#'
-          underline='always'
-        >
-          Forgot Password?
-        </Link>
-      ) : null}
+      {type === LOGIN
+        ? SuperLinks(
+            {
+              classes: { root: classes.forgotPassword },
+              href: '#',
+              underline: 'always',
+              onClick: linkFunctionality(FORGOT_PASSWORD, dispatch),
+            },
+            'Forgot Password?'
+          )
+        : null}
 
       {/*Link that's to the right of the form */}
-      <Link classes={{ root: classes.signIn }} href='#' underline='always'>
-        {rightLinkText}
-      </Link>
+      {SuperLinks(
+        {
+          classes: { root: classes.signIn },
+          href: '#',
+          underline: 'always',
+          onClick: linkFunctionality(
+            type !== LOGIN ? SIGN_IN : SIGN_UP,
+            dispatch
+          ),
+        },
+        rightLinkText
+      )}
     </div>
   );
 
@@ -131,14 +155,14 @@ function Form({ type }) {
 
       {/*Add on submit handler */}
       <form className={classes.form}>
-        {type === 'Register' ? nameComponent : null}
+        {type === REGISTER ? nameComponent : null}
         {emailComponent}
 
         {/*Becomes visible for any form type, except a password reset form*/}
-        {type !== 'Reset' ? (
+        {type !== RESET ? (
           <>
             {passwordComponent}
-            {forgotPassword}
+            {linkOptions}
           </>
         ) : null}
 
@@ -161,19 +185,19 @@ function setTexts(formType) {
   let rightLinkText = '';
 
   switch (formType) {
-    case 'Login':
+    case LOGIN:
       mainText = 'Welcome Back';
       subText = 'sign into your account';
       buttonText = 'Log In';
       rightLinkText = "Don't have an account? Sign up";
       break;
-    case 'Register':
+    case REGISTER:
       mainText = 'Create Your Account';
       subText = 'and start today';
       buttonText = 'Create Account';
       rightLinkText = 'Already have an account? Sign in';
       break;
-    case 'Reset':
+    case RESET:
       mainText = 'Reset Password';
       subText = '';
       buttonText = 'Reset Password';
@@ -212,6 +236,35 @@ function createTextFieldComponent(classes, config) {
       }}
     />
   );
+}
+
+function SuperLinks(props, text) {
+  return <Link {...props}>{text}</Link>;
+}
+
+function linkFunctionality(type, dispatch) {
+  switch (type) {
+    case SIGN_UP:
+      return (e) => {
+        e.preventDefault();
+        dispatch({ type: CHANGE_FORM_VIEW, payload: REGISTER });
+      };
+
+    case SIGN_IN:
+      return (e) => {
+        e.preventDefault();
+        dispatch({ type: CHANGE_FORM_VIEW, payload: LOGIN });
+      };
+
+    case FORGOT_PASSWORD:
+      return (e) => {
+        e.preventDefault();
+        dispatch({ type: CHANGE_FORM_VIEW, payload: RESET });
+      };
+
+    default:
+      break;
+  }
 }
 
 export default Form;

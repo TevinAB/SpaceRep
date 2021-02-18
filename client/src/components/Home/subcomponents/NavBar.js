@@ -73,14 +73,13 @@ function NavBar() {
 
   const userDisplay = (
     <Box classes={{ root: classes.userDisplay }}>
-      <i class='far fa-user-circle' style={{ fontSize: '24px' }}></i>
+      <i className='far fa-user-circle' style={{ fontSize: '24px' }}></i>
       <span style={{ paddingLeft: '10px', fontSize: '16px' }}>
         Tevin Banton
       </span>
     </Box>
   );
 
-  //To allow addItem button to be placed at a different location on smaller screens
   const addItem = (
     <Button className={`${classes.addItem}`} variant='outlined'>
       Add Item
@@ -106,7 +105,7 @@ function NavBar() {
           classes: { root: classes.searchBar },
           endAdornment: (
             <IconButton>
-              <i class='fas fa-search'></i>
+              <i className='fas fa-search'></i>
             </IconButton>
           ),
         }}
@@ -116,7 +115,7 @@ function NavBar() {
 
   const searchButton = (
     <Box classes={{ root: classes.searchButton }}>
-      <i class='fas fa-search'></i>
+      <i className='fas fa-search'></i>
     </Box>
   );
 
