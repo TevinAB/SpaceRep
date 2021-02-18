@@ -3,7 +3,8 @@ import {
   USER_LOADING,
   LOGIN,
   LOGOUT,
-  REGISTER,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
   AUTH_ERROR,
 } from '../actions/actionTypes';
 
@@ -26,8 +27,28 @@ function authReducer(state = initialState, action) {
         user: action.payload,
         isAuthenticated: true,
       };
+    case REGISTER_SUCCESS:
+      localStorage.setItem('token', action.payload.token);
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        token: action.payload.token,
+        user: action.payload.user,
+      };
+    case LOGOUT:
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      };
+
     case AUTH_ERROR:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, isAuthenticated: false, user: null };
+
     default:
       return state;
   }

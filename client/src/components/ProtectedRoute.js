@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Welcome from '../components/Welcome/Welcome';
 
 function ProtectedRoute({ children }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  console.log(`is auth: ${isAuthenticated}`);
   return (
-    <Route exact path='/home'>
-      {isAuthenticated ? { ...children } : <Redirect to='/' />}
-    </Route>
+    <Route path='/'>{isAuthenticated ? { ...children } : <Welcome />}</Route>
   );
 }
 

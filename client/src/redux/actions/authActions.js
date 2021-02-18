@@ -2,8 +2,8 @@ import {
   USER_LOADED,
   USER_LOADING,
   LOGIN,
-  LOGOUT,
-  REGISTER,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
   AUTH_ERROR,
 } from './actionTypes';
 import axios from 'axios';
@@ -16,6 +16,19 @@ export const loadUser = () => (dispatch, getState) => {
     .catch((err) => {
       dispatch({ type: AUTH_ERROR, payload: err.response.data });
     });
+};
+
+export const register = ({ username, email, password }) => (dispatch) => {
+  const body = JSON.stringify({ username, email, password });
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  axios
+    .post('api/users', body, config)
+    .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
+    .catch((err) => console.log(err.response.data));
 };
 
 export function tokenConfig(getState) {

@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import './App.css';
-import Welcome from './components/Welcome/Welcome';
 import ProtectedRoute from './components/ProtectedRoute';
 import { CssBaseline, Container, ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import store from './redux/store';
 import { loadUser } from './redux/actions/authActions';
 import Home from './components/Home/Home';
@@ -36,9 +35,6 @@ function App() {
           <Provider store={store}>
             <Router>
               <Switch>
-                <Route exact path='/'>
-                  <Welcome />
-                </Route>
                 <ProtectedRoute>
                   <Home />
                 </ProtectedRoute>

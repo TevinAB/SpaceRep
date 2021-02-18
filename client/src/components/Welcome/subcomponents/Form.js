@@ -10,6 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { CHANGE_FORM_VIEW } from '../../../redux/actions/actionTypes';
+import { register } from '../../../redux/actions/authActions';
 
 const marginBottom = '1.5rem';
 const useStyle = makeStyles((theme) => ({
@@ -170,6 +171,11 @@ function Form({ type }) {
           classes={{ root: classes.buttonStyle }}
           fullWidth
           variant='contained'
+          onClick={buttonFunctionality(
+            { username, email, password },
+            type,
+            dispatch
+          )}
         >
           {buttonText}
         </Button>
@@ -262,6 +268,19 @@ function linkFunctionality(type, dispatch) {
         dispatch({ type: CHANGE_FORM_VIEW, payload: RESET });
       };
 
+    default:
+      break;
+  }
+}
+
+function buttonFunctionality(userData, type, dispatch) {
+  const { username, email, password } = userData;
+  switch (type) {
+    case REGISTER:
+      return (e) => {
+        e.preventDefault();
+        dispatch(register({ username, email, password }));
+      };
     default:
       break;
   }

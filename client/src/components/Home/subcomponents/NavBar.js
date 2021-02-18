@@ -9,6 +9,8 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOGOUT } from '../../../redux/actions/actionTypes';
 
 const useStyle = makeStyles((theme) => ({
   appBar: {
@@ -70,13 +72,13 @@ const useStyle = makeStyles((theme) => ({
 
 function NavBar() {
   const classes = useStyle();
+  const username = useSelector((state) => state.auth.user.username);
+  const dispatch = useDispatch();
 
   const userDisplay = (
     <Box classes={{ root: classes.userDisplay }}>
       <i className='far fa-user-circle' style={{ fontSize: '24px' }}></i>
-      <span style={{ paddingLeft: '10px', fontSize: '16px' }}>
-        Tevin Banton
-      </span>
+      <span style={{ paddingLeft: '10px', fontSize: '16px' }}>{username}</span>
     </Box>
   );
 
@@ -89,7 +91,14 @@ function NavBar() {
   const buttonContainer = (
     <div style={{ flexShrink: 0, marginLeft: '15px' }}>
       {addItem}
-      <Button className={`${classes.logOut}`} variant='outlined'>
+      <Button
+        className={`${classes.logOut}`}
+        variant='outlined'
+        onClick={(e) => {
+          e.preventDefault();
+          dispatch({ type: LOGOUT });
+        }}
+      >
         Log out
       </Button>
     </div>
