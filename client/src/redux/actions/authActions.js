@@ -1,4 +1,5 @@
 import {
+  UPDATE_USER_TOPICS,
   USER_LOADED,
   USER_LOADING,
   LOGIN_SUCCESS,
@@ -52,11 +53,24 @@ export const register = ({ username, email, password }) => (dispatch) => {
     });
 };
 
+export const updateTopics = (topic) => (dispatch, getState) => {
+  const user = getState().auth.user;
+  const topics = [...user.topics, topic];
+  const body = { topic };
+  axios
+    .put(`api/users/${user._id}`, body, tokenConfig(getState))
+    .then(() => {
+      dispatch({ type: UPDATE_USER_TOPICS, payload: topics });
+    })
+    .catch((err) => Error(err));
+};
+
 export function tokenConfig(getState) {
   const token = getState().auth.token;
   const config = {
     headers: {
       'x-auth-token': token,
+      'Content-Type': 'application/json',
     },
   };
 

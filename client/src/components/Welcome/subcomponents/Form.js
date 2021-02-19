@@ -171,8 +171,14 @@ function Form({ type }) {
         <Typography classes={{ root: classes.subText }}>{subText}</Typography>
       </div>
 
-      {/*Add on submit handler */}
-      <form className={classes.form}>
+      <form
+        className={classes.form}
+        onSubmit={formFunctionality(
+          { username, email, password },
+          type,
+          dispatch
+        )}
+      >
         {type === REGISTER ? nameComponent : null}
         {emailComponent}
 
@@ -188,11 +194,7 @@ function Form({ type }) {
           classes={{ root: classes.buttonStyle }}
           fullWidth
           variant='contained'
-          onClick={buttonFunctionality(
-            { username, email, password },
-            type,
-            dispatch
-          )}
+          type='submit'
         >
           {buttonText}
         </Button>
@@ -203,7 +205,7 @@ function Form({ type }) {
           onClose={handleSnackbarClose}
           key='bottom center'
         >
-          <Alert variant='filled' severity='error'>
+          <Alert variant='filled' severity='error' elevation={6}>
             {error}
           </Alert>
         </Snackbar>
@@ -301,7 +303,7 @@ function linkFunctionality(type, dispatch) {
   }
 }
 
-function buttonFunctionality(userData, type, dispatch) {
+function formFunctionality(userData, type, dispatch) {
   const { username, email, password } = userData;
   switch (type) {
     case REGISTER:

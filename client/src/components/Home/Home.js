@@ -5,6 +5,7 @@ import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Feed from './subcomponents/Feed';
 import Edit from './subcomponents/Edit';
+import { useSelector } from 'react-redux';
 
 const useStyle = makeStyles((theme) => ({
   wrapperContainer: {
@@ -14,12 +15,14 @@ const useStyle = makeStyles((theme) => ({
 
 function Home() {
   const classes = useStyle();
+  const topics = useSelector((state) => state.auth.user.topics);
+
   return (
     <Box classes={{ root: classes.wrapperContainer }}>
       <NavBar />
-      <Panel />
-      {false ? <Feed /> : <Edit />}
-      <Panel />
+      <Panel type='Topics' collection={topics} />
+      {true ? <Feed /> : <Edit />}
+      <Panel type='View' collection={['Oldest', 'Newest', 'All items']} />
     </Box>
   );
 }

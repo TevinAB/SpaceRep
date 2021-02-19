@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, InputAdornment, Box, Typography } from '@material-ui/core';
+import { TextField, Box, Typography, IconButton } from '@material-ui/core';
 import PanelItem from './PanelItem';
+import { updateTopics } from '../../../redux/actions/authActions';
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -33,37 +35,53 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function Panel() {
+function Panel(props) {
+  const { type, collection } = props;
+  const [topic, setTopic] = useState('');
   const classes = useStyle();
+  const dispatch = useDispatch();
 
   const title = (
     <Box classes={{ root: classes.titleBox }}>
-      <Typography classes={{ root: classes.title }}>Topics</Typography>
+      <Typography classes={{ root: classes.title }}>{type}</Typography>
     </Box>
   );
+
+  const handleAddTopic = (e) => {
+    e.preventDefault();
+    dispatch(updateTopics(topic));
+  };
 
   const addTopic = (
     <Box classes={{ root: classes.topicBox }}>
-      <TextField
-        fullWidth
-        placeholder='Add topic...'
-        variant='outlined'
-        InputProps={{
-          classes: { root: classes.searchBar },
-          endAdornment: (
-            <InputAdornment>
-              <i className='fas fa-plus-circle'></i>
-            </InputAdornment>
-          ),
-        }}
-      />
+      {type === 'Topics' ? (
+        <TextField
+          fullWidth
+          value={topic}
+          onChange={(e) => {
+            setTopic(e.target.value);
+          }}
+          placeholder='Add topic...'
+          variant='outlined'
+          InputProps={{
+            classes: { root: classes.searchBar },
+            endAdornment: (
+              <IconButton size='small' onClick={handleAddTopic}>
+                <i className='fas fa-plus-circle'></i>
+              </IconButton>
+            ),
+          }}
+        />
+      ) : null}
     </Box>
   );
 
+  //Change key from index
   const items = (
     <Box>
-      <PanelItem type='topics' text='Git' />
-      <PanelItem type='topics' text='Python' />
+      {collection.map((item, index) => (
+        <PanelItem key={index} type={type} text={item} />
+      ))}
     </Box>
   );
 

@@ -113,7 +113,7 @@ function NavBar() {
         InputProps={{
           classes: { root: classes.searchBar },
           endAdornment: (
-            <IconButton>
+            <IconButton size='small'>
               <i className='fas fa-search'></i>
             </IconButton>
           ),

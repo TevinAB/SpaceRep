@@ -9,3 +9,4 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const CHANGE_FORM_VIEW = 'CHANGE_FORM_VIEW';
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+export const UPDATE_USER_TOPICS = 'UPDATE_USER_TOPICS';

@@ -7,6 +7,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   AUTH_ERROR,
+  UPDATE_USER_TOPICS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -55,6 +56,8 @@ function authReducer(state = initialState, action) {
     case LOGIN_FAIL:
       return { ...state, isLoading: false, isAuthenticated: false, user: null };
 
+    case UPDATE_USER_TOPICS:
+      return { ...state, user: { ...state.user, topics: action.payload } };
     default:
       return state;
   }

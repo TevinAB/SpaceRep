@@ -3,6 +3,7 @@ const route = express.Router();
 const bcrypt = require('bcrypt');
 const { signTokenAndRespond } = require('../../utils/serverUtils');
 const User = require('../../models/User');
+const auth = require('../../middleware/auth');
 
 /**
  * @route [POST] api/users
@@ -33,6 +34,23 @@ route.post('/', async (req, res) => {
   } catch (error) {
     res.status(400).json({ msg: 'Registration failed.' });
   }
+});
+
+/**
+ * @route [PUT] api/users/:id
+ * @description Update user data
+ * @access Private
+ */
+route.put('/:id', auth, (req, res) => {
+  const id = req.params.id;
+  User.findById(id, async (err, user) => {
+    if (err) return res.status(400).json({ msg: 'Update failed' });
+
+    const newTopic = req.body.topic;
+    user.topics = [...user.topics, newTopic];
+    await user.save();
+    res.json({ msg: 'Update successful' });
+  });
 });
 
 module.exports = route;
