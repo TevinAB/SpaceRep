@@ -1,7 +1,6 @@
 import {
   USER_LOADED,
   USER_LOADING,
-  LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   REGISTER_SUCCESS,
@@ -9,6 +8,7 @@ import {
   AUTH_ERROR,
 } from './actionTypes';
 import axios from 'axios';
+import { setError } from './errorActions';
 
 const config = {
   headers: {
@@ -22,7 +22,7 @@ export const loadUser = () => (dispatch, getState) => {
     .get('api/login/user', tokenConfig(getState))
     .then((res) => dispatch({ type: USER_LOADED, payload: res.data }))
     .catch((err) => {
-      dispatch({ type: AUTH_ERROR, payload: err.response.data });
+      dispatch({ type: AUTH_ERROR });
     });
 };
 
@@ -36,6 +36,7 @@ export const login = ({ email, password }) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAIL });
+      dispatch(setError(err.response.data.msg));
     });
 };
 
@@ -47,6 +48,7 @@ export const register = ({ username, email, password }) => (dispatch) => {
     .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
     .catch((err) => {
       dispatch({ type: REGISTER_FAIL });
+      dispatch(setError(err.response.data.msg));
     });
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   TextField,
@@ -6,11 +6,14 @@ import {
   Box,
   Button,
   Link,
+  Snackbar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { Alert } from '@material-ui/lab';
+import { useDispatch, useSelector } from 'react-redux';
 import { CHANGE_FORM_VIEW } from '../../../redux/actions/actionTypes';
 import { register, login } from '../../../redux/actions/authActions';
+import { clearError } from '../../../redux/actions/errorActions';
 
 const marginBottom = '1.5rem';
 const useStyle = makeStyles((theme) => ({
@@ -66,6 +69,9 @@ const useStyle = makeStyles((theme) => ({
       top: '14px',
     },
   },
+  snackBar: {
+    backgroundColor: '#F44336',
+  },
 }));
 
 //Form types
@@ -81,9 +87,20 @@ const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 function Form({ type }) {
   const classes = useStyle();
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.error.msg);
+  const [open, setOpen] = useState(false);
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleSnackbarClose = () => {
+    setOpen(false);
+    dispatch(clearError());
+  };
+
+  useEffect(() => {
+    if (error) setOpen(true);
+  }, [error]);
 
   const nameComponent = createTextFieldComponent(classes, {
     name: 'username',
@@ -179,6 +196,17 @@ function Form({ type }) {
         >
           {buttonText}
         </Button>
+        <Snackbar
+          classes={{ root: classes.Snackbar }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+          key='bottom center'
+        >
+          <Alert variant='filled' severity='error'>
+            {error}
+          </Alert>
+        </Snackbar>
       </form>
     </Box>
   );
@@ -287,6 +315,8 @@ function buttonFunctionality(userData, type, dispatch) {
         e.preventDefault();
         dispatch(login({ email, password }));
       };
+
+    // Password reset functionality should be added
 
     default:
       break;
