@@ -1,7 +1,8 @@
 import {
   USER_LOADED,
   USER_LOADING,
-  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -27,6 +28,17 @@ function authReducer(state = initialState, action) {
         user: action.payload,
         isAuthenticated: true,
       };
+
+    case LOGIN_SUCCESS:
+      localStorage.setItem('token', action.payload.token);
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
+
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
@@ -47,6 +59,8 @@ function authReducer(state = initialState, action) {
       };
 
     case AUTH_ERROR:
+    case REGISTER_FAIL:
+    case LOGIN_FAIL:
       return { ...state, isLoading: false, isAuthenticated: false, user: null };
 
     default:

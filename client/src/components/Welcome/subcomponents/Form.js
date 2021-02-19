@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { CHANGE_FORM_VIEW } from '../../../redux/actions/actionTypes';
-import { register } from '../../../redux/actions/authActions';
+import { register, login } from '../../../redux/actions/authActions';
 
 const marginBottom = '1.5rem';
 const useStyle = makeStyles((theme) => ({
@@ -281,6 +281,13 @@ function buttonFunctionality(userData, type, dispatch) {
         e.preventDefault();
         dispatch(register({ username, email, password }));
       };
+
+    case LOGIN:
+      return (e) => {
+        e.preventDefault();
+        dispatch(login({ email, password }));
+      };
+
     default:
       break;
   }

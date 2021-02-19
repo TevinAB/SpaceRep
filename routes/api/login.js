@@ -2,6 +2,7 @@ const express = require('express');
 const route = express.Router();
 const { signTokenAndRespond } = require('../../utils/serverUtils');
 const bcrypt = require('bcrypt');
+const auth = require('../../middleware/auth');
 
 const User = require('../../models/User');
 
@@ -29,6 +30,24 @@ route.post('/', async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ msg: 'Login failed', error });
+  }
+});
+
+/**
+ * @route api/login/user
+ * @description Get user data
+ * @access Private
+ */
+route.get('/user', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+      .select('-__v')
+      .select('-password')
+      .select('-registerDate');
+
+    res.json(user);
+  } catch (error) {
+    res.status(401).json({ msg: 'Failed to get user data' });
   }
 });
 
