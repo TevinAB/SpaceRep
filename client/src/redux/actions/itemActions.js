@@ -2,16 +2,22 @@ import {
   LOAD_ITEMS,
   LOAD_ITEMS_SUCCESS,
   LOAD_ITEMS_FAIL,
-  ADD_ITEM,
+  ADDING_ITEM,
+  ITEM_ADDED,
   REMOVE_ITEM,
   UPDATE_ITEM,
 } from '../actions/actionTypes';
 import { tokenConfig } from './authActions';
 import axios from 'axios';
+import {
+  changeView,
+  HOME,
+} from '../../components/Home/subcomponents/viewTypes';
 
 export const loadItems = () => (dispatch, getState) => {
   dispatch({ type: LOAD_ITEMS });
   const userId = getState().auth.user._id;
+  console.log(`user id: ${userId}`);
 
   axios
     .get(`api/items/${userId}`, tokenConfig(getState))
@@ -21,19 +27,21 @@ export const loadItems = () => (dispatch, getState) => {
     });
 };
 
-export const addItem = ({ title, answer, topic, repData }) => {
+export const addItem = ({ title, answer, topic }) => {
   return (dispatch, getState) => {
+    dispatch({ type: ADDING_ITEM });
+
     const userId = getState().auth.user._id;
     const body = {
       title,
       answer,
       topic,
-      repData,
       userId,
     };
-    axios
-      .post('api/items', body, tokenConfig(getState))
-      .then((res) => dispatch({ type: ADD_ITEM, payload: res.data }));
+    axios.post('api/items', body, tokenConfig(getState)).then((res) => {
+      dispatch({ type: ITEM_ADDED, payload: res.data });
+      changeView(dispatch, HOME);
+    });
   };
 };
 

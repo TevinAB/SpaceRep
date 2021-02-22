@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +13,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { HOME, changeView } from '../subcomponents/viewTypes';
+import { addItem } from '../../../redux/actions/itemActions';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -78,16 +79,15 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function Edit() {
-  const [open, setOpen] = useState(false);
+  const [topicOpen, setTopicOpen] = useState(false);
   const [topic, setTopic] = useState('');
-  const [frequency, setFrequency] = useState('');
+  const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+
+  const isAdding = useSelector((state) => state.items.addingItem);
+
   const classes = useStyle();
   const dispatch = useDispatch();
-
-  const onOpen = () => setOpen(true);
-  const onClose = () => setOpen(false);
-  const onTopicChange = (e) => setTopic(e.target.value);
 
   const clickHandler = (e) => {
     e.preventDefault();
@@ -106,6 +106,8 @@ function Edit() {
         fullWidth
         placeholder='Add question'
         variant='outlined'
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
         InputProps={{
           classes: { root: classes.addItem },
         }}
@@ -117,10 +119,10 @@ function Edit() {
     <Box classes={{ root: classes.selectTopicContainer }}>
       <Select
         id='select-topic'
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        onChange={onTopicChange}
+        open={topicOpen}
+        onOpen={() => setTopicOpen(true)}
+        onClose={() => setTopicOpen(false)}
+        onChange={(e) => setTopic(e.target.value)}
         value={topic}
         fullWidth
         variant='outlined'
@@ -129,26 +131,6 @@ function Edit() {
         {/*Map over the topics when available*/}
         <MenuItem value='Git'>Git</MenuItem>
         <MenuItem value='Python'>Python</MenuItem>
-      </Select>
-    </Box>
-  );
-
-  const selectFrequency = (
-    <Box classes={{ root: classes.selectTopicContainer }}>
-      <Select
-        id='select-frequency'
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        onChange={onTopicChange}
-        value={topic}
-        fullWidth
-        variant='outlined'
-        className={classes.selectTopic}
-      >
-        {/*Map over the topics when available*/}
-        <MenuItem value='Low'>Low</MenuItem>
-        <MenuItem value='Med'>Med</MenuItem>
       </Select>
     </Box>
   );
@@ -163,7 +145,7 @@ function Edit() {
     <Button
       className={`${classes.save}`}
       variant='outlined'
-      onClick={clickHandler}
+      onClick={(e) => dispatch(addItem({ title: question, answer, topic }))}
     >
       Save Item
     </Button>
@@ -193,7 +175,6 @@ function Edit() {
         {addItemTF}
         {selectTopic}
         {editor}
-        {selectFrequency}
         {buttonContainer}
       </Container>
     </Box>

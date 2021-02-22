@@ -11,11 +11,6 @@ const ItemSchema = new Schema({
   },
   topic: String,
   userId: String,
-  repData: {
-    frequency: String,
-    maxReps: Number,
-    activeDate: Date,
-  },
 });
 
 module.exports = Item = mongoose.model('item', ItemSchema);

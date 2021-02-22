@@ -2,7 +2,8 @@ import {
   LOAD_ITEMS,
   LOAD_ITEMS_SUCCESS,
   LOAD_ITEMS_FAIL,
-  ADD_ITEM,
+  ADDING_ITEM,
+  ITEM_ADDED,
   REMOVE_ITEM,
   UPDATE_ITEM,
 } from '../actions/actionTypes';
@@ -10,6 +11,7 @@ import {
 const initialState = {
   items: null,
   isLoading: false,
+  addingItem: false,
 };
 
 function itemReducer(state = initialState, action) {
@@ -33,10 +35,17 @@ function itemReducer(state = initialState, action) {
         isLoading: false,
       };
 
-    case ADD_ITEM:
+    case ADDING_ITEM:
+      return {
+        ...state,
+        addingItem: true,
+      };
+
+    case ITEM_ADDED:
       return {
         ...state,
         items: [...state.items, action.payload],
+        addingItem: false,
       };
 
     case REMOVE_ITEM:

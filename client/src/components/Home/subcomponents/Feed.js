@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import FeedItem from './FeedItem';
@@ -16,60 +17,15 @@ const useStyle = makeStyles((theme) => ({
 
 function Feed() {
   const classes = useStyle();
+  const items = useSelector((state) => state.items.items) || [];
+
   return (
     <Box classes={{ root: classes.container }}>
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
-      <FeedItem
-        question='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        answer='Egestas integer eget aliquet nibh praesent tristique magna. Velit laoreet id donec ultrices tincidunt. Arcu dui vivamus arcu felis bibendum ut tristique et'
-      />
+      {items.map((item) => {
+        return (
+          <FeedItem key={item._id} question={item.title} answer={item.answer} />
+        );
+      })}
     </Box>
   );
 }

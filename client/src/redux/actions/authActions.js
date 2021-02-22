@@ -24,7 +24,7 @@ export const loadUser = () => (dispatch, getState) => {
     .get('api/login/user', tokenConfig(getState))
     .then((res) => {
       dispatch({ type: USER_LOADED, payload: res.data });
-      dispatch(loadItems());
+      //dispatch(loadItems());
     })
     .catch((err) => {
       dispatch({ type: AUTH_ERROR });

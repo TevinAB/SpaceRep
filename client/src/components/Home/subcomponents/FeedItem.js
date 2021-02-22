@@ -30,7 +30,7 @@ const useStyle = makeStyles((theme) => ({
   editButton: {
     fontSize: '18px',
     color: '#938DF2',
-    marginRight: '5px',
+    marginRight: '0px',
   },
   leftDetails: {
     display: 'flex',
@@ -38,11 +38,6 @@ const useStyle = makeStyles((theme) => ({
   },
   rightDetails: {
     justifySelf: 'flex-end',
-  },
-  badge: {
-    position: 'relative',
-    transform: 'none',
-    marginRight: '5px',
   },
   faded: {
     color: theme.palette.grey[500],
@@ -63,16 +58,8 @@ function FeedItem({ question, answer }) {
       <Box classes={{ root: classes.detailBox }}>
         <Box classes={{ root: classes.leftDetails }}>
           <IconButton classes={{ root: classes.editButton }}>
-            <i className='far fa-edit'></i>
+            <i className='far fa-edit'> Edit</i>
           </IconButton>
-          <Badge
-            classes={{ badge: classes.badge }}
-            badgeContent={27}
-            color='error'
-          ></Badge>
-          <Typography classes={{ root: classes.faded }} variant='caption'>
-            Days left
-          </Typography>
         </Box>
         <Box classes={{ root: classes.rightDetails }}>
           <Typography classes={{ root: classes.faded }} variant='caption'>
@@ -86,7 +73,7 @@ function FeedItem({ question, answer }) {
   const answerBox = (
     <Collapse in={open}>
       <Box classes={{ root: classes.answerBox }}>
-        <Typography>{answer}</Typography>
+        <Typography dangerouslySetInnerHTML={{ __html: answer }} />
       </Box>
     </Collapse>
   );

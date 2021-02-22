@@ -29,7 +29,6 @@ route.post('/', auth, (req, res) => {
     answer: req.body.answer,
     topic: req.body.topic,
     userId: req.body.userId,
-    repData: req.body.repData,
   });
   newItem
     .save()
@@ -63,7 +62,6 @@ route.put('/:id', auth, (req, res) => {
     item.answer = req.body.answer || item.answer;
     item.topic = req.body.topic || item.topic;
     item.userId = req.body.userId || item.userId;
-    item.repData = req.body.repData || item.repData;
     item.save();
 
     res.json({ msg: 'Success' });
