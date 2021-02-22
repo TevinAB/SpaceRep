@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import {
   MenuItem,
   Button,
 } from '@material-ui/core';
+import { HOME, changeView } from '../subcomponents/viewTypes';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -20,6 +22,11 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: 'calc(100vh - 64px)',
     marginTop: '64px',
     overflow: 'auto',
+  },
+  container: {
+    height: 'calc(100vh - 64px)',
+    overflow: 'auto',
+    //border: `1px solid ${theme.palette.grey[300]}`,
   },
   titleBox: {
     padding: '12px 0px 0px',
@@ -56,12 +63,17 @@ const useStyle = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark,
     },
     textTransform: 'capitalize',
-    marginTop: '25px',
   },
-  container: {
-    height: 'calc(100vh - 64px)',
-    overflow: 'auto',
-    //border: `1px solid ${theme.palette.grey[300]}`,
+  back: {
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    textTransform: 'capitalize',
+  },
+  buttonContainer: {
+    height: '34px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '25px',
   },
 }));
 
@@ -71,10 +83,16 @@ function Edit() {
   const [frequency, setFrequency] = useState('');
   const [answer, setAnswer] = useState('');
   const classes = useStyle();
+  const dispatch = useDispatch();
 
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
   const onTopicChange = (e) => setTopic(e.target.value);
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    changeView(dispatch, HOME);
+  };
 
   const title = (
     <Box classes={{ root: classes.titleBox }}>
@@ -142,9 +160,30 @@ function Edit() {
   );
 
   const save = (
-    <Button className={`${classes.save}`} variant='outlined'>
+    <Button
+      className={`${classes.save}`}
+      variant='outlined'
+      onClick={clickHandler}
+    >
       Save Item
     </Button>
+  );
+
+  const back = (
+    <Button
+      className={`${classes.back}`}
+      variant='outlined'
+      onClick={clickHandler}
+    >
+      Back
+    </Button>
+  );
+
+  const buttonContainer = (
+    <Box classes={{ root: classes.buttonContainer }}>
+      {back}
+      {save}
+    </Box>
   );
 
   return (
@@ -155,7 +194,7 @@ function Edit() {
         {selectTopic}
         {editor}
         {selectFrequency}
-        {save}
+        {buttonContainer}
       </Container>
     </Box>
   );

@@ -11,6 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOGOUT } from '../../../redux/actions/actionTypes';
+import { EDIT, changeView } from '../subcomponents/viewTypes';
 
 const useStyle = makeStyles((theme) => ({
   appBar: {
@@ -83,7 +84,14 @@ function NavBar() {
   );
 
   const addItem = (
-    <Button className={`${classes.addItem}`} variant='outlined'>
+    <Button
+      className={`${classes.addItem}`}
+      variant='outlined'
+      onClick={(e) => {
+        e.preventDefault();
+        changeView(dispatch, EDIT);
+      }}
+    >
       Add Item
     </Button>
   );

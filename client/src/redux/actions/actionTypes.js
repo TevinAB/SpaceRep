@@ -8,6 +8,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 
 export const CHANGE_FORM_VIEW = 'CHANGE_FORM_VIEW';
+export const CHANGE_MAIN_VIEW = 'CHANGE_MAIN_VIEW';
 
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
