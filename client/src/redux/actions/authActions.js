@@ -10,6 +10,7 @@ import {
 } from './actionTypes';
 import axios from 'axios';
 import { setError } from './errorActions';
+import { loadItems } from './itemActions';
 
 const config = {
   headers: {
@@ -21,7 +22,10 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
   axios
     .get('api/login/user', tokenConfig(getState))
-    .then((res) => dispatch({ type: USER_LOADED, payload: res.data }))
+    .then((res) => {
+      dispatch({ type: USER_LOADED, payload: res.data });
+      dispatch(loadItems());
+    })
     .catch((err) => {
       dispatch({ type: AUTH_ERROR });
     });

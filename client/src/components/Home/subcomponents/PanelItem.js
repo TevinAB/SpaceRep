@@ -21,14 +21,7 @@ function PanelItem({ type, text }) {
 
   return (
     <Box classes={{ root: classes.container }}>
-      <Badge
-        classes={{ badge: classes.badge }}
-        badgeContent={99}
-        max={99}
-        color='error'
-      >
-        <Typography classes={{ root: classes.text }}>{text}</Typography>
-      </Badge>
+      <Typography classes={{ root: classes.text }}>{text}</Typography>
     </Box>
   );
 }

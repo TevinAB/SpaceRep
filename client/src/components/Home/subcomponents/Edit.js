@@ -143,7 +143,7 @@ function Edit() {
 
   const save = (
     <Button className={`${classes.save}`} variant='outlined'>
-      Add Item
+      Save Item
     </Button>
   );
 

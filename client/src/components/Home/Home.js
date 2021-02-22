@@ -21,7 +21,7 @@ function Home() {
     <Box classes={{ root: classes.wrapperContainer }}>
       <NavBar />
       <Panel type='Topics' collection={topics} />
-      {true ? <Feed /> : <Edit />}
+      {false ? <Feed /> : <Edit />}
       <Panel type='View' collection={['Oldest', 'Newest', 'All items']} />
     </Box>
   );

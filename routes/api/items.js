@@ -7,10 +7,10 @@ const Item = require('../../models/Item');
 /**
  * @route [GET] api/items/:id
  * @description Get items
- * @access Public
+ * @access Private
  */
-route.get('/:id', (req, res) => {
-  //id: user's _id field
+route.get('/:id', auth, (req, res) => {
+  //id: the associated user's _id field
   const id = req.params.id;
   Item.find({ userId: id })
     .select('-__v')
@@ -43,10 +43,10 @@ route.post('/', auth, (req, res) => {
  * @access Private
  */
 route.delete('/:id', auth, (req, res) => {
-  const id = req.body.id;
+  const id = req.params.id;
   Item.deleteOne(id)
     .then(() => res.json({ msg: 'Success' }))
-    .catch(() => res.status(400).json({ msg: 'Falied!' }));
+    .catch(() => res.status(400).json({ msg: 'Failed to remove item' }));
 });
 
 /**

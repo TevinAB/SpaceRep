@@ -49,7 +49,7 @@ function Panel(props) {
 
   const handleAddTopic = (e) => {
     e.preventDefault();
-    if (topic) dispatch(updateTopics(topic));
+    if (topic.trim()) dispatch(updateTopics(topic));
   };
 
   const addTopic = (
