@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  IconButton,
-  Box,
-  Typography,
-  Collapse,
-  Badge,
-} from '@material-ui/core';
+import { IconButton, Box, Typography, Collapse } from '@material-ui/core';
+import { EDIT, changeView } from '../subcomponents/viewTypes';
+import { setEditItem } from '../../../redux/actions/itemActions';
 
 const useStyle = makeStyles((theme) => ({
   questionBox: {
@@ -44,9 +41,10 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function FeedItem({ question, answer }) {
+function FeedItem({ question, answer, itemId }) {
   const [open, setOpen] = useState(false);
   const classes = useStyle();
+  const dispatch = useDispatch();
 
   const onClick = (e) => setOpen(!open);
 
@@ -57,7 +55,14 @@ function FeedItem({ question, answer }) {
       </Box>
       <Box classes={{ root: classes.detailBox }}>
         <Box classes={{ root: classes.leftDetails }}>
-          <IconButton classes={{ root: classes.editButton }}>
+          <IconButton
+            classes={{ root: classes.editButton }}
+            onClick={(e) => {
+              e.preventDefault();
+              changeView(dispatch, EDIT);
+              dispatch(setEditItem(itemId));
+            }}
+          >
             <i className='far fa-edit'> Edit</i>
           </IconButton>
         </Box>

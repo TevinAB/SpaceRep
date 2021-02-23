@@ -6,12 +6,14 @@ import {
   ITEM_ADDED,
   REMOVE_ITEM,
   UPDATE_ITEM,
+  SET_ITEM_TO_EDIT,
 } from '../actions/actionTypes';
 
 const initialState = {
   items: null,
   isLoading: false,
   addingItem: false,
+  itemToEdit: null,
 };
 
 function itemReducer(state = initialState, action) {
@@ -58,6 +60,9 @@ function itemReducer(state = initialState, action) {
       const arr = state.items.filter((item) => item._id !== action.payload._id);
       arr.push(action.payload);
       return { ...state, items: arr };
+
+    case SET_ITEM_TO_EDIT:
+      return { ...state, itemToEdit: action.payload };
 
     default:
       return state;

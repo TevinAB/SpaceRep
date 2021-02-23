@@ -13,7 +13,12 @@ import {
   Button,
 } from '@material-ui/core';
 import { HOME, changeView } from '../subcomponents/viewTypes';
-import { addItem } from '../../../redux/actions/itemActions';
+import {
+  addItem,
+  setEditItem,
+  updateItem,
+  removeItem,
+} from '../../../redux/actions/itemActions';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -70,6 +75,15 @@ const useStyle = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     textTransform: 'capitalize',
   },
+  deleteButton: {
+    backgroundColor: theme.palette.error.main,
+    borderColor: theme.palette.error.main,
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: theme.palette.error.dark,
+    },
+    textTransform: 'capitalize',
+  },
   buttonContainer: {
     height: '34px',
     display: 'flex',
@@ -79,12 +93,19 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function Edit() {
+  const { editId, items } = useSelector((state) => {
+    return {
+      editId: state.items.itemToEdit,
+      items: state.items.items,
+    };
+  });
+  const itemEditing = getItemFromId(editId, items);
   const [topicOpen, setTopicOpen] = useState(false);
-  const [topic, setTopic] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-
-  const isAdding = useSelector((state) => state.items.addingItem);
+  const [topic, setTopic] = useState(itemEditing ? itemEditing.topic : '');
+  const [question, setQuestion] = useState(
+    itemEditing ? itemEditing.title : ''
+  );
+  const [answer, setAnswer] = useState(itemEditing ? itemEditing.answer : '');
 
   const classes = useStyle();
   const dispatch = useDispatch();
@@ -92,6 +113,7 @@ function Edit() {
   const clickHandler = (e) => {
     e.preventDefault();
     changeView(dispatch, HOME);
+    dispatch(setEditItem(null));
   };
 
   const title = (
@@ -145,9 +167,37 @@ function Edit() {
     <Button
       className={`${classes.save}`}
       variant='outlined'
-      onClick={(e) => dispatch(addItem({ title: question, answer, topic }))}
+      onClick={(e) => {
+        if (itemEditing) {
+          dispatch(
+            updateItem({
+              title: question,
+              answer,
+              topic,
+              userId: itemEditing.userId,
+              _id: itemEditing._id,
+            })
+          );
+        } else {
+          dispatch(addItem({ title: question, answer, topic }));
+        }
+        dispatch(setEditItem(null));
+      }}
     >
       Save Item
+    </Button>
+  );
+
+  const deleteButton = (
+    <Button
+      className={`${classes.deleteButton}`}
+      variant='outlined'
+      onClick={(e) => {
+        e.preventDefault();
+        dispatch(removeItem(itemEditing._id));
+      }}
+    >
+      Delete
     </Button>
   );
 
@@ -164,6 +214,7 @@ function Edit() {
   const buttonContainer = (
     <Box classes={{ root: classes.buttonContainer }}>
       {back}
+      {itemEditing ? deleteButton : null}
       {save}
     </Box>
   );
@@ -179,6 +230,15 @@ function Edit() {
       </Container>
     </Box>
   );
+}
+
+function getItemFromId(id, items) {
+  if (!items || !id) return null;
+
+  const match = items.filter((item) => item._id === id);
+  if (match.length) return match[0];
+
+  return null;
 }
 
 export default Edit;

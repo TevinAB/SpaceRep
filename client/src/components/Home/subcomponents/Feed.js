@@ -23,7 +23,12 @@ function Feed() {
     <Box classes={{ root: classes.container }}>
       {items.map((item) => {
         return (
-          <FeedItem key={item._id} question={item.title} answer={item.answer} />
+          <FeedItem
+            key={item._id}
+            question={item.title}
+            answer={item.answer}
+            itemId={item._id}
+          />
         );
       })}
     </Box>

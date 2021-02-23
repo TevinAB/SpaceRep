@@ -6,6 +6,7 @@ import {
   ITEM_ADDED,
   REMOVE_ITEM,
   UPDATE_ITEM,
+  SET_ITEM_TO_EDIT,
 } from '../actions/actionTypes';
 import { tokenConfig } from './authActions';
 import axios from 'axios';
@@ -17,7 +18,6 @@ import {
 export const loadItems = () => (dispatch, getState) => {
   dispatch({ type: LOAD_ITEMS });
   const userId = getState().auth.user._id;
-  console.log(`user id: ${userId}`);
 
   axios
     .get(`api/items/${userId}`, tokenConfig(getState))
@@ -46,13 +46,19 @@ export const addItem = ({ title, answer, topic }) => {
 };
 
 export const removeItem = (itemId) => (dispatch, getState) => {
-  axios
-    .delete(`api/items/${itemId}`, tokenConfig(getState))
-    .then(() => dispatch({ type: REMOVE_ITEM, payload: itemId }));
+  axios.delete(`api/items/${itemId}`, tokenConfig(getState)).then(() => {
+    dispatch({ type: REMOVE_ITEM, payload: itemId });
+    changeView(dispatch, HOME);
+  });
 };
 
 export const updateItem = (item) => (dispatch, getState) => {
-  axios
-    .put(`api/items/${item._id}`, tokenConfig(getState))
-    .then(() => dispatch({ type: UPDATE_ITEM, payload: item }));
+  axios.put(`api/items/${item._id}`, item, tokenConfig(getState)).then(() => {
+    dispatch({ type: UPDATE_ITEM, payload: item });
+    changeView(dispatch, HOME);
+  });
+};
+
+export const setEditItem = (itemId) => {
+  return { type: SET_ITEM_TO_EDIT, payload: itemId };
 };

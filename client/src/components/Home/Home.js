@@ -39,7 +39,7 @@ function Home() {
       <NavBar />
       <Panel type='Topics' collection={topics} />
       {componentToRender}
-      <Panel type='View' collection={['Oldest', 'Newest', 'All items']} />
+      <Panel type='View' collection={['Oldest', 'Newest']} />
     </Box>
   );
 }

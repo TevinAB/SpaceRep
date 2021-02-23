@@ -21,3 +21,4 @@ export const ADDING_ITEM = 'ADDING_ITEM';
 export const ITEM_ADDED = 'ITEM_ADDED';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const SET_ITEM_TO_EDIT = 'SET_ITEM_TO_EDIT';

@@ -43,7 +43,7 @@ route.post('/', auth, (req, res) => {
  */
 route.delete('/:id', auth, (req, res) => {
   const id = req.params.id;
-  Item.deleteOne(id)
+  Item.deleteOne({ _id: id })
     .then(() => res.json({ msg: 'Success' }))
     .catch(() => res.status(400).json({ msg: 'Failed to remove item' }));
 });
