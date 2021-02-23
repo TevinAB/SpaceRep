@@ -16,6 +16,11 @@ const useStyle = makeStyles((theme) => ({
   },
   titleBox: {
     paddingTop: '12px',
+    userSelect: 'none',
+    cursor: 'pointer',
+    '&:focus': {
+      outlineColor: theme.palette.primary.main,
+    },
   },
   detailBox: {
     display: 'flex',
@@ -49,8 +54,17 @@ function FeedItem({ question, answer, itemId }) {
   const onClick = (e) => setOpen(!open);
 
   const questionBox = (
-    <Box classes={{ root: classes.questionBox }} onClick={onClick}>
-      <Box classes={{ root: classes.titleBox }}>
+    <Box classes={{ root: classes.questionBox }}>
+      <Box
+        classes={{ root: classes.titleBox }}
+        onClick={onClick}
+        tabIndex={0}
+        onKeyUp={(event) => {
+          if (event.key === 'Enter') {
+            event.target.click();
+          }
+        }}
+      >
         <Typography variant='h6'>{question}</Typography>
       </Box>
       <Box classes={{ root: classes.detailBox }}>
