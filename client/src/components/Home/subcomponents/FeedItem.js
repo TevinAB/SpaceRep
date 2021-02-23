@@ -6,6 +6,9 @@ import { EDIT, changeView } from '../subcomponents/viewTypes';
 import { setEditItem } from '../../../redux/actions/itemActions';
 
 const useStyle = makeStyles((theme) => ({
+  container: {
+    paddingTop: '10px',
+  },
   questionBox: {
     padding: '0px 17px',
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
@@ -13,6 +16,7 @@ const useStyle = makeStyles((theme) => ({
   answerBox: {
     padding: '12px 17px',
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
+    backgroundColor: theme.palette.grey[200],
   },
   titleBox: {
     paddingTop: '12px',
@@ -31,7 +35,7 @@ const useStyle = makeStyles((theme) => ({
   },
   editButton: {
     fontSize: '18px',
-    color: '#938DF2',
+    color: '#5e53f3',
     marginRight: '0px',
   },
   leftDetails: {
@@ -42,7 +46,7 @@ const useStyle = makeStyles((theme) => ({
     justifySelf: 'flex-end',
   },
   faded: {
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[700],
   },
 }));
 
@@ -98,7 +102,7 @@ function FeedItem({ question, answer, itemId }) {
   );
 
   return (
-    <Box>
+    <Box classes={{ root: classes.container }}>
       {questionBox}
       {answerBox}
     </Box>

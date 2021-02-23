@@ -140,7 +140,7 @@ function NavBar() {
     <div>
       <AppBar classes={{ root: classes.appBar }}>
         <Toolbar>
-          <Container classes={{ root: classes.navContainer }}>
+          <Container component='nav' classes={{ root: classes.navContainer }}>
             {userDisplay}
             {searchButton}
             {searchBar}

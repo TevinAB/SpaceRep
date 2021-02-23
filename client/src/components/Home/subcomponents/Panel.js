@@ -42,7 +42,7 @@ function Panel(props) {
   const dispatch = useDispatch();
 
   const title = (
-    <Box classes={{ root: classes.titleBox }}>
+    <Box component='header' classes={{ root: classes.titleBox }}>
       <Typography classes={{ root: classes.title }}>{type}</Typography>
     </Box>
   );
@@ -53,7 +53,7 @@ function Panel(props) {
   };
 
   const addTopic = (
-    <Box classes={{ root: classes.topicBox }}>
+    <Box aria-label='Add Topic' classes={{ root: classes.topicBox }}>
       {type === 'Topics' ? (
         <TextField
           fullWidth
@@ -86,7 +86,7 @@ function Panel(props) {
   );
 
   return (
-    <Box classes={{ root: classes.container }}>
+    <Box component='section' classes={{ root: classes.container }}>
       {title}
       {addTopic}
       {items}

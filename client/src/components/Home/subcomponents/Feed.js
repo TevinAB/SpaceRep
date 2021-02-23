@@ -20,7 +20,7 @@ function Feed() {
   const items = useSelector((state) => state.items.items) || [];
 
   return (
-    <Box classes={{ root: classes.container }}>
+    <Box component='main' classes={{ root: classes.container }}>
       {items.map((item) => {
         return (
           <FeedItem
