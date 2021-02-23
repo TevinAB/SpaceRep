@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  TextField,
-  Container,
-  Box,
-  IconButton,
-} from '@material-ui/core';
+import React from 'react';
+import { AppBar, Toolbar, Button, Container, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { LOGOUT } from '../../../redux/actions/actionTypes';
@@ -112,38 +104,12 @@ function NavBar() {
     </div>
   );
 
-  const searchBar = (
-    <Box classes={{ root: classes.searchContainer }}>
-      <TextField
-        fullWidth
-        placeholder='Search for items in the current topic...'
-        variant='outlined'
-        InputProps={{
-          classes: { root: classes.searchBar },
-          endAdornment: (
-            <IconButton size='small'>
-              <i className='fas fa-search'></i>
-            </IconButton>
-          ),
-        }}
-      />
-    </Box>
-  );
-
-  const searchButton = (
-    <Box classes={{ root: classes.searchButton }}>
-      <i className='fas fa-search'></i>
-    </Box>
-  );
-
   return (
     <div>
       <AppBar classes={{ root: classes.appBar }}>
         <Toolbar>
           <Container component='nav' classes={{ root: classes.navContainer }}>
             {userDisplay}
-            {searchButton}
-            {searchBar}
             {buttonContainer}
           </Container>
         </Toolbar>

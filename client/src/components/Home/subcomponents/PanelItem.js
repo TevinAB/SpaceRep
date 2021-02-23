@@ -6,6 +6,7 @@ const useStyle = makeStyles((theme) => ({
   container: {
     borderBottom: `1px solid ${theme.palette.grey[200]}`,
     padding: '12px 0px 0px 30px',
+    overflow: 'hidden',
   },
   text: {
     fontSize: '16px',

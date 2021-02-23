@@ -12,6 +12,9 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: 'calc(100vh - 64px)',
     marginTop: '64px',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
 }));
 

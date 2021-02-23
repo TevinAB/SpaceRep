@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Box, Typography, IconButton } from '@material-ui/core';
 import PanelItem from './PanelItem';
@@ -13,6 +13,9 @@ const useStyle = makeStyles((theme) => ({
     width: '17.96875%',
     height: '100vh',
     paddingTop: '64px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   searchBar: {
     height: '37px',
@@ -49,13 +52,22 @@ function Panel(props) {
 
   const handleAddTopic = (e) => {
     e.preventDefault();
+
+    //prevent adding blank spaces as a topic
     if (topic.trim()) dispatch(updateTopics(topic));
+
+    setTopic('');
   };
 
   const addTopic = (
     <Box aria-label='Add Topic' classes={{ root: classes.topicBox }}>
       {type === 'Topics' ? (
         <TextField
+          onKeyUp={(event) => {
+            if (event.key === 'Enter') {
+              event.target.nextElementSibling.click();
+            }
+          }}
           fullWidth
           value={topic}
           onChange={(e) => {

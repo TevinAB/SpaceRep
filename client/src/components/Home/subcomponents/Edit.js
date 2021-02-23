@@ -28,11 +28,13 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: 'calc(100vh - 64px)',
     marginTop: '64px',
     overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   container: {
     height: 'calc(100vh - 64px)',
     overflow: 'auto',
-    //border: `1px solid ${theme.palette.grey[300]}`,
   },
   titleBox: {
     padding: '12px 0px 0px',
