@@ -5,15 +5,12 @@ import Welcome from '../components/Welcome/Welcome';
 
 function ProtectedRoute({ children }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch(loadItems());
-  //   }
-  // }, [dispatch, isAuthenticated]);
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   return (
-    <Route path='/'>{isAuthenticated ? { ...children } : <Welcome />}</Route>
+    <Route path='/'>
+      {isAuthenticated ? { ...children } : isLoading || <Welcome />}
+    </Route>
   );
 }
 
