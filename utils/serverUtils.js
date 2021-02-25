@@ -11,7 +11,7 @@ function signTokenAndRespond(user, res) {
   res.json({
     token,
     user: {
-      id: user.id,
+      _id: user.id,
       username: user.username,
       topics: user.topics,
       currentDate: new Date(Date.now()).toISOString(),

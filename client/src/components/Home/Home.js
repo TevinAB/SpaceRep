@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavBar from './subcomponents/NavBar';
 import Panel from './subcomponents/Panel';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Feed from './subcomponents/Feed';
 import Edit from './subcomponents/Edit';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { HOME, EDIT } from './subcomponents/viewTypes';
+import { loadItems } from '../../redux/actions/itemActions';
 
 const useStyle = makeStyles((theme) => ({
   wrapperContainer: {
@@ -16,9 +17,14 @@ const useStyle = makeStyles((theme) => ({
 
 function Home() {
   const classes = useStyle();
+  const dispatch = useDispatch();
   const topics = useSelector((state) => state.auth.user.topics);
   const view = useSelector((state) => state.mainView.view);
   let componentToRender = <Feed />;
+
+  useEffect(() => {
+    dispatch(loadItems());
+  }, [dispatch]);
 
   switch (view) {
     case HOME:
