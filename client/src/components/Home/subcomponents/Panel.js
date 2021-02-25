@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Box, Typography, IconButton } from '@material-ui/core';
@@ -105,5 +106,10 @@ function Panel(props) {
     </Box>
   );
 }
+
+Panel.propTypes = {
+  type: PropTypes.string.isRequired,
+  collection: PropTypes.array.isRequired,
+};
 
 export default Panel;

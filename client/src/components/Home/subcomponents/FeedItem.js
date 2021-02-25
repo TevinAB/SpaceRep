@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Box, Typography, Collapse } from '@material-ui/core';
@@ -108,4 +109,11 @@ function FeedItem({ question, answer, itemId }) {
     </Box>
   );
 }
+
+FeedItem.propTypes = {
+  question: PropTypes.string,
+  answer: PropTypes.string,
+  itemId: PropTypes.string,
+};
+
 export default FeedItem;

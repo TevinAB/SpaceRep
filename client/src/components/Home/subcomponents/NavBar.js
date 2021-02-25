@@ -27,25 +27,6 @@ const useStyle = makeStyles((theme) => ({
     width: '100%',
     borderRadius: '7px',
   },
-  searchButton: {
-    display: 'none',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '20px',
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-    },
-  },
-  searchContainer: {
-    minWidth: '155px',
-    width: '507px',
-    maxWidth: '507px',
-    flexShrink: 1,
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  },
   addItem: {
     backgroundColor: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
@@ -89,7 +70,14 @@ function NavBar() {
   );
 
   const buttonContainer = (
-    <div style={{ flexShrink: 0, marginLeft: '15px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexShrink: 0,
+        marginLeft: '15px',
+        justifyContent: 'space-between',
+      }}
+    >
       {addItem}
       <Button
         className={`${classes.logOut}`}

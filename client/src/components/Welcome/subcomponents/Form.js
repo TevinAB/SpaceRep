@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   Typography,
   TextField,
@@ -318,11 +319,13 @@ function formFunctionality(userData, type, dispatch) {
         dispatch(login({ email, password }));
       };
 
-    // Password reset functionality should be added
-
     default:
       break;
   }
 }
+
+Form.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default Form;
