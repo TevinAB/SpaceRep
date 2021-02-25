@@ -78,12 +78,10 @@ const useStyle = makeStyles((theme) => ({
 //Form types
 const LOGIN = 'LOGIN';
 const REGISTER = 'REGISTER';
-const RESET = 'RESET';
 
 //Form link types
 const SIGN_UP = 'SIGN_UP';
 const SIGN_IN = 'SIGN_IN';
-const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 function Form({ type }) {
   const classes = useStyle();
@@ -134,19 +132,6 @@ function Form({ type }) {
 
   const linkOptions = (
     <div style={{ position: 'relative', marginBottom }}>
-      {/*Only visible for a login form */}
-      {type === LOGIN
-        ? SuperLinks(
-            {
-              classes: { root: classes.forgotPassword },
-              href: '#',
-              underline: 'always',
-              onClick: linkFunctionality(FORGOT_PASSWORD, dispatch),
-            },
-            'Forgot Password?'
-          )
-        : null}
-
       {/*Link that's to the right of the form */}
       {SuperLinks(
         {
@@ -180,16 +165,10 @@ function Form({ type }) {
           dispatch
         )}
       >
-        {type === REGISTER ? nameComponent : null}
+        {type === REGISTER && nameComponent}
         {emailComponent}
-
-        {/*Becomes visible for any form type, except a password reset form*/}
-        {type !== RESET ? (
-          <>
-            {passwordComponent}
-            {linkOptions}
-          </>
-        ) : null}
+        {passwordComponent}
+        {linkOptions}
 
         <Button
           classes={{ root: classes.buttonStyle }}
@@ -199,6 +178,8 @@ function Form({ type }) {
         >
           {buttonText}
         </Button>
+
+        {/*Error display*/}
         <Snackbar
           classes={{ root: classes.Snackbar }}
           open={open}
@@ -234,11 +215,7 @@ function setTexts(formType) {
       buttonText = 'Create Account';
       rightLinkText = 'Already have an account? Sign in';
       break;
-    case RESET:
-      mainText = 'Reset Password';
-      subText = '';
-      buttonText = 'Reset Password';
-      break;
+
     default:
       subText = '';
       buttonText = '';
@@ -279,6 +256,10 @@ function SuperLinks(props, text) {
   return <Link {...props}>{text}</Link>;
 }
 
+/**
+ * @param {*} type Link type
+ * @param {*} dispatch Dispatch function
+ */
 function linkFunctionality(type, dispatch) {
   switch (type) {
     case SIGN_UP:
@@ -293,17 +274,16 @@ function linkFunctionality(type, dispatch) {
         dispatch({ type: CHANGE_FORM_VIEW, payload: LOGIN });
       };
 
-    case FORGOT_PASSWORD:
-      return (e) => {
-        e.preventDefault();
-        dispatch({ type: CHANGE_FORM_VIEW, payload: RESET });
-      };
-
     default:
       break;
   }
 }
 
+/**
+ * @param {*} userData The user's data that was entered in the form
+ * @param {*} type The form type: Sign up or Login
+ * @param {*} dispatch Dispatch function
+ */
 function formFunctionality(userData, type, dispatch) {
   const { username, email, password } = userData;
   switch (type) {
