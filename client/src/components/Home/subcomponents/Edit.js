@@ -95,10 +95,11 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function Edit() {
-  const { editId, items } = useSelector((state) => {
+  const { editId, items, userTopics } = useSelector((state) => {
     return {
       editId: state.items.itemToEdit,
       items: state.items.items,
+      userTopics: state.auth.user.topics,
     };
   });
   const itemEditing = getItemFromId(editId, items);
@@ -152,9 +153,14 @@ function Edit() {
         variant='outlined'
         className={classes.selectTopic}
       >
-        {/*Map over the topics when available*/}
-        <MenuItem value='Git'>Git</MenuItem>
-        <MenuItem value='Python'>Python</MenuItem>
+        {/*Change key from index at some point*/}
+        {userTopics.map((element, index) => {
+          return (
+            <MenuItem key={index} value={element}>
+              {element}
+            </MenuItem>
+          );
+        })}
       </Select>
     </Box>
   );
